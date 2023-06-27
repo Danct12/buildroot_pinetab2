@@ -1,0 +1,12 @@
+config BR2_TARGET_RKBIN
+	bool "Rockchip Loader Binaries (rkbin)"
+	help
+	  While some platform will work without the blobs (given that
+	  the ATF source code for that platform is available), some like
+	  RK35XX doesn't have ATF source code available. Thus being the
+	  only choice to get a working system.
+
+	  If your platform requires rkbin, say Y. The binaries will be
+	  dropped into BINARIES_DIR.
+
+	  
