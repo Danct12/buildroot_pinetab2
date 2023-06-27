@@ -2,7 +2,7 @@
 
 ## Build instructions
 ```
-mkdir buildroot_bouffalo && cd buildroot_bouffalo
+mkdir buildroot_pinetab2 && cd buildroot_pinetab2
 git clone https://github.com/buildroot/buildroot
 git clone https://github.com/Danct12/buildroot_pinetab2
 cd buildroot
