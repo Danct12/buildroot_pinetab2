@@ -1,7 +1,7 @@
 From 058f03d1c756f8e469eeb7414f7b75eb68a3a5cc Mon Sep 17 00:00:00 2001
 From: Segfault <awarnecke002@hotmail.com>
 Date: Sat, 20 May 2023 15:32:45 +1000
-Subject: [PATCH 2/2] arch/arm64: add Pine64 PineTab2 device trees
+Subject: [PATCH 2/4] arch/arm64: add Pine64 PineTab2 device trees
 
 This includes support for both the v0.1 units that were sent to developers and the v2.0 units from production, v1.0 is not included as no units are known to exist
 

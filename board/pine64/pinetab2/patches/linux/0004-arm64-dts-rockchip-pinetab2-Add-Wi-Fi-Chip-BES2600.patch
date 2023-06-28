@@ -1,0 +1,80 @@
+From cdb7418d380ce20d2ec44a9a06cfe375544dfa92 Mon Sep 17 00:00:00 2001
+From: Danct12 <danct12@disroot.org>
+Date: Wed, 28 Jun 2023 01:19:50 +0000
+Subject: [PATCH 4/4] arm64: dts: rockchip: pinetab2: Add Wi-Fi Chip (BES2600)
+
+---
+ .../dts/rockchip/rk3566-pinetab2-v2.0.dts     | 20 +++++++++++++++++++
+ .../boot/dts/rockchip/rk3566-pinetab2.dtsi    | 11 ++++++++++
+ 2 files changed, 31 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
+index 79f672123b7f..cb1d26d850bf 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
+@@ -7,6 +7,16 @@
+ / {
+ 	model = "Pine64 PineTab2 v2.0";
+ 	compatible = "pine64,pinetab2-v2.0", "pine64,pinetab2", "rockchip,rk3566";
++
++	sdio_pwrkey: sdio-pwrkey {
++		compatible = "mmc-pwrseq-simple";
++		clocks = <&rk817 1>;
++		clock-names = "ext_clock";
++		pinctrl-names = "default";
++		pinctrl-0 = <&wifi_pwr_wake>;
++		reset-gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_HIGH>;
++		post-power-on-delay-ms = <500>;
++	};
+ };
+ 
+ &gpio_keys {
+@@ -39,6 +49,16 @@ hall_int_l: hall-int-l {
+ 			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 	};
++
++	wifi {
++		wifi_pwr_wake: wifi-pwr-wake {
++			rockchip,pins = <3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++};
++
++&sdmmc1 {
++	mmc-pwrseq = <&sdio_pwrseq &sdio_pwrkey>;
+ };
+ 
+ &vcc_wl {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+index a766f21bd6f8..d8ee503cc6e2 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+@@ -267,6 +267,7 @@ vcc_wl: vcc_wl {
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+ 		vin-supply = <&vcc3v3_sys>;
++		enable-active-high;
+ 
+ 		regulator-state-mem {
+ 			regulator-off-in-suspend;
+@@ -931,6 +932,16 @@ &sdmmc1_cmd
+ 	vmmc-supply = <&vcc_wl>;
+ 	vqmmc-supply = <&vcca1v8_pmu>;
+ 	status = "okay";
++
++	wifi: wifi@1 {
++		compatible = "bes,bes2600";
++		reg = <1>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&wifi_reg_on_h &host_wake_wl &wifi_wake_host_h>;
++		power-gpios = <&gpio0 RK_PC0 GPIO_ACTIVE_HIGH>;
++		wakeup-gpios = <&gpio0 RK_PB7 GPIO_ACTIVE_HIGH>;
++		interrupt-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
++	};
+ };
+ 
+ &sfc {
+-- 
+2.41.0
+
