@@ -1,0 +1,5 @@
+config BR2_TARGET_BES2600_FIRMWARE
+	bool "Bestechnic BES2600 Wi-Fi/BT Combo Firmware"
+	help
+	  Firmware for BES2600 Wi-Fi/BT Combo chip, this chip can be
+	  found in the PINE64 PineTab 2.

@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_PINETAB2_BR_PATH/package/bes2600-firmware/Config.in"

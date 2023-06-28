@@ -1,3 +1,7 @@
 menu "Bootloaders"
 source "$BR2_EXTERNAL_PINETAB2_BR_PATH/boot/Config.in"
 endmenu
+
+menu "Target packages"
+source "$BR2_EXTERNAL_PINETAB2_BR_PATH/package/Config.in"
+endmenu
