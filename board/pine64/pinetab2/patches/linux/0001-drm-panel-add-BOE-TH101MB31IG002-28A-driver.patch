@@ -1,7 +1,7 @@
-From 6ce2b1ce5a7c02386071b456cbacd7859e716caa Mon Sep 17 00:00:00 2001
+From f9336adb01f64012a99df71823fdf4d28338f6ba Mon Sep 17 00:00:00 2001
 From: Segfault <awarnecke002@hotmail.com>
 Date: Fri, 20 Jan 2023 14:20:27 +1100
-Subject: [PATCH 1/2] drm/panel: add BOE TH101MB31IG002-28A driver
+Subject: [PATCH 1/4] drm/panel: add BOE TH101MB31IG002-28A driver
 
 This driver is used for the panel in the Pine64 PineTab2.
 
@@ -14,7 +14,7 @@ Signed-off-by: Segfault <awarnecke002@hotmail.com>
  create mode 100644 drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 
 diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 8eeee71c0000..2400aa1fa108 100644
+index 2b9d6db7860b..ba1fd1168e95 100644
 --- a/drivers/gpu/drm/panel/Kconfig
 +++ b/drivers/gpu/drm/panel/Kconfig
 @@ -67,6 +67,17 @@ config DRM_PANEL_BOE_HIMAX8279D
@@ -36,7 +36,7 @@ index 8eeee71c0000..2400aa1fa108 100644
  	tristate "BOE TV101WUM and AUO KD101N80 45NA 1200x1920 panel"
  	depends on OF
 diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index c05aa9e23907..9022522de9b3 100644
+index ff169781e82d..4debde6318de 100644
 --- a/drivers/gpu/drm/panel/Makefile
 +++ b/drivers/gpu/drm/panel/Makefile
 @@ -5,6 +5,7 @@ obj-$(CONFIG_DRM_PANEL_ASUS_Z00T_TM5P5_NT35596) += panel-asus-z00t-tm5p5-n35596.

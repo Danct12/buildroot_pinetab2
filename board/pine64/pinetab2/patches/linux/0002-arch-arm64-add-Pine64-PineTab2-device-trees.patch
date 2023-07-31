@@ -1,7 +1,7 @@
-From 058f03d1c756f8e469eeb7414f7b75eb68a3a5cc Mon Sep 17 00:00:00 2001
+From afc76b5bfd7e626e27caa2a05658369f64ce487f Mon Sep 17 00:00:00 2001
 From: Segfault <awarnecke002@hotmail.com>
 Date: Sat, 20 May 2023 15:32:45 +1000
-Subject: [PATCH 2/2] arch/arm64: add Pine64 PineTab2 device trees
+Subject: [PATCH 2/4] arch/arm64: add Pine64 PineTab2 device trees
 
 This includes support for both the v0.1 units that were sent to developers and the v2.0 units from production, v1.0 is not included as no units are known to exist
 
@@ -17,10 +17,10 @@ Signed-off-by: Segfault <awarnecke002@hotmail.com>
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 
 diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
-index 99a44c400d6a..76605a6ad1ec 100644
+index 2d585bbb8f3a..d02586ddea91 100644
 --- a/arch/arm64/boot/dts/rockchip/Makefile
 +++ b/arch/arm64/boot/dts/rockchip/Makefile
-@@ -72,6 +72,8 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg353vs.dtb
+@@ -74,6 +74,8 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg353vs.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg503.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.1.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.2.dtb
