@@ -1,0 +1,54 @@
+From edc5543d08e9b4fd362f88761fe51995ce266280 Mon Sep 17 00:00:00 2001
+From: Danct12 <danct12@disroot.org>
+Date: Thu, 17 Aug 2023 12:53:45 +0000
+Subject: [PATCH 5/5] arm64: dts: rockchip: pinetab2: Use rk817_ext audio
+ profile
+
+Upstream ALSA UCM has RK817 audio profile and it works perfectly
+fine with our hardware configuration.
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+index 1ba6e610767a..5ddfff69948d 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+@@ -116,28 +116,25 @@ rk817-sound {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&hp_det_l>;
+ 		simple-audio-card,format = "i2s";
+-		simple-audio-card,name = "PineTab2";
++		simple-audio-card,name = "rk817_ext";
+ 		simple-audio-card,mclk-fs = <256>;
+ 
+ 		simple-audio-card,widgets =
+ 			"Microphone", "Mic Jack",
+ 			"Headphone", "Headphones",
+-			"Microphone", "Microphone",
+-			"Speaker", "Speakers";
++			"Speaker", "Internal Speakers";
+ 
+ 		simple-audio-card,routing =
+-			"MICL", "Microphone",
+ 			"MICR", "Mic Jack",
+ 			"Headphones", "HPOL",
+ 			"Headphones", "HPOR",
++			"Internal Speakers", "Speaker Amplifier OUTL",
++			"Internal Speakers", "Speaker Amplifier OUTR",
+ 			"Speaker Amplifier INL", "HPOL",
+-			"Speaker Amplifier INR", "HPOR",
+-			"Speakers", "Speaker Amplifier OUTL",
+-			"Speakers", "Speaker Amplifier OUTR";
+-
++			"Speaker Amplifier INR", "HPOR";
+ 		simple-audio-card,hp-det-gpio = <&gpio4 RK_PC6 GPIO_ACTIVE_LOW>;
+ 		simple-audio-card,aux-devs = <&speaker_amp>;
+-		simple-audio-card,pin-switches = "Speakers", "Microphone";
++		simple-audio-card,pin-switches = "Internal Speakers";
+ 
+ 		simple-audio-card,cpu {
+ 			sound-dai = <&i2s1_8ch>;
+-- 
+2.41.0
+

@@ -1,7 +1,7 @@
-From 49c2ba71abad94b5d8975876de05d6c057528907 Mon Sep 17 00:00:00 2001
+From 6a811851af7ecc7f37149ecfe4e3f622c76432b8 Mon Sep 17 00:00:00 2001
 From: Alexander Warnecke <awarnecke002@hotmail.com>
 Date: Thu, 29 Jun 2023 19:52:42 +1000
-Subject: [PATCH 3/4] supply: rk817: Fix battery capacity sanity check
+Subject: [PATCH 3/5] supply: rk817: Fix battery capacity sanity check
  calculation
 
 If the nvram variable is corrupted in a way that multiplying it by 1000 causes an integer overflow and wraps around to a number within or below the sanity check bounds, the check fails and capacity is reported incorrectly.

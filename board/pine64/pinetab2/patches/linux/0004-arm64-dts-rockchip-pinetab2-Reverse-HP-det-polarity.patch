@@ -1,7 +1,7 @@
-From 991181d70bc460a9d5578e097fd1082339a9b098 Mon Sep 17 00:00:00 2001
+From cbf1671c4612c982434497f1e447ed092606b7c0 Mon Sep 17 00:00:00 2001
 From: Danct12 <danct12@disroot.org>
 Date: Mon, 10 Jul 2023 07:30:00 +0000
-Subject: [PATCH 4/4] arm64: dts: rockchip: pinetab2: Reverse HP det polarity
+Subject: [PATCH 4/5] arm64: dts: rockchip: pinetab2: Reverse HP det polarity
 
 ---
  arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi | 2 +-

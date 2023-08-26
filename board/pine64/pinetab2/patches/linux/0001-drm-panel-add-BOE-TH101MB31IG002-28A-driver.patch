@@ -1,7 +1,7 @@
-From f9336adb01f64012a99df71823fdf4d28338f6ba Mon Sep 17 00:00:00 2001
+From 28975e572fede60ab4f498e6b08b0490e9b950cc Mon Sep 17 00:00:00 2001
 From: Segfault <awarnecke002@hotmail.com>
 Date: Fri, 20 Jan 2023 14:20:27 +1100
-Subject: [PATCH 1/4] drm/panel: add BOE TH101MB31IG002-28A driver
+Subject: [PATCH 1/5] drm/panel: add BOE TH101MB31IG002-28A driver
 
 This driver is used for the panel in the Pine64 PineTab2.
 
