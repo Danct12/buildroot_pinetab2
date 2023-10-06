@@ -1,26 +1,31 @@
-From 0ba1b87e0a3559adb329c4bbfc920d1944cf54e0 Mon Sep 17 00:00:00 2001
-From: Segfault <awarnecke002@hotmail.com>
+From 32a0a9fcdca2a872f3f0623704b78bc808a18b7f Mon Sep 17 00:00:00 2001
+From: Alexander Warnecke <awarnecke002@hotmail.com>
 Date: Sat, 20 May 2023 15:32:45 +1000
-Subject: [PATCH 2/5] arch/arm64: add Pine64 PineTab2 device trees
+Subject: [PATCH 2/3] arm64: dts: rockchip: Add Pine64 PineTab2 device trees
 
-This includes support for both the v0.1 units that were sent to developers and the v2.0 units from production, v1.0 is not included as no units are known to exist
+This includes support for both the v0.1 units that were sent to developers and
+the production v2.0 units.
 
-Signed-off-by: Segfault <awarnecke002@hotmail.com>
+NOTE: Currently pinctrl nodes exist for control over the bes2600 module, these
+      should be removed prior to upstream submission.
+
+Co-developed-by: Dang Huynh <danct12@riseup.net>
+Signed-off-by: Alexander Warnecke <awarnecke002@hotmail.com>
 ---
- arch/arm64/boot/dts/rockchip/Makefile         |    2 +
- .../dts/rockchip/rk3566-pinetab2-v0.1.dts     |   26 +
- .../dts/rockchip/rk3566-pinetab2-v2.0.dts     |   46 +
- .../boot/dts/rockchip/rk3566-pinetab2.dtsi    | 1031 +++++++++++++++++
- 4 files changed, 1105 insertions(+)
+ arch/arm64/boot/dts/rockchip/Makefile         |   2 +
+ .../dts/rockchip/rk3566-pinetab2-v0.1.dts     |  26 +
+ .../dts/rockchip/rk3566-pinetab2-v2.0.dts     |  46 +
+ .../boot/dts/rockchip/rk3566-pinetab2.dtsi    | 994 ++++++++++++++++++
+ 4 files changed, 1068 insertions(+)
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
  create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 
 diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
-index 2d585bbb8f3a..d02586ddea91 100644
+index b7fb908eb92d..0aa92399f92f 100644
 --- a/arch/arm64/boot/dts/rockchip/Makefile
 +++ b/arch/arm64/boot/dts/rockchip/Makefile
-@@ -74,6 +74,8 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg353vs.dtb
+@@ -76,6 +76,8 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg353vs.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-anbernic-rg503.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.1.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.2.dtb
@@ -31,7 +36,7 @@ index 2d585bbb8f3a..d02586ddea91 100644
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-radxa-cm3-io.dtb
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
 new file mode 100644
-index 000000000000..ba244545ba26
+index 000000000000..8b110186a3eb
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
 @@ -0,0 +1,26 @@
@@ -51,19 +56,19 @@ index 000000000000..ba244545ba26
 +};
 +
 +&pinctrl {
-+	display {
++	lcd0 {
 +		lcd0_rst_l: lcd0-rst-l {
 +			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
 +};
 +
-+&vcc_wl {
-+	gpio = <&gpio0 RK_PA0 GPIO_ACTIVE_LOW>;
++&sdmmc1 {
++	vmmc-supply = <&vcc3v3_sys>;
 +};
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 new file mode 100644
-index 000000000000..79f672123b7f
+index 000000000000..80b18dfbf2ed
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 @@ -0,0 +1,46 @@
@@ -97,28 +102,28 @@ index 000000000000..79f672123b7f
 +};
 +
 +&pinctrl {
-+	display {
-+		lcd0_rst_l: lcd0-rst-l {
-+			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
 +	hall {
 +		hall_int_l: hall-int-l {
 +			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
++
++	lcd0 {
++		lcd0_rst_l: lcd0-rst-l {
++			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
 +};
 +
-+&vcc_wl {
-+	gpio = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
++&sdmmc1 {
++	vmmc-supply = <&vcc_sys>;
 +};
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 new file mode 100644
-index 000000000000..a766f21bd6f8
+index 000000000000..c0ea79727dc7
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-@@ -0,0 +1,1031 @@
+@@ -0,0 +1,994 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +
 +#include <dt-bindings/gpio/gpio.h>
@@ -237,28 +242,25 @@ index 000000000000..a766f21bd6f8
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&hp_det_l>;
 +		simple-audio-card,format = "i2s";
-+		simple-audio-card,name = "PineTab2";
++		simple-audio-card,name = "rk817_ext";
 +		simple-audio-card,mclk-fs = <256>;
 +
 +		simple-audio-card,widgets =
 +			"Microphone", "Mic Jack",
 +			"Headphone", "Headphones",
-+			"Microphone", "Microphone",
-+			"Speaker", "Speakers";
++			"Speaker", "Internal Speakers";
 +
 +		simple-audio-card,routing =
-+			"MICL", "Microphone",
 +			"MICR", "Mic Jack",
 +			"Headphones", "HPOL",
 +			"Headphones", "HPOR",
++			"Internal Speakers", "Speaker Amplifier OUTL",
++			"Internal Speakers", "Speaker Amplifier OUTR",
 +			"Speaker Amplifier INL", "HPOL",
-+			"Speaker Amplifier INR", "HPOR",
-+			"Speakers", "Speaker Amplifier OUTL",
-+			"Speakers", "Speaker Amplifier OUTR";
-+
-+		simple-audio-card,hp-det-gpio = <&gpio4 RK_PC6 GPIO_ACTIVE_HIGH>;
++			"Speaker Amplifier INR", "HPOR";
++		simple-audio-card,hp-det-gpio = <&gpio4 RK_PC6 GPIO_ACTIVE_LOW>;
 +		simple-audio-card,aux-devs = <&speaker_amp>;
-+		simple-audio-card,pin-switches = "Speakers", "Microphone";
++		simple-audio-card,pin-switches = "Internal Speakers";
 +
 +		simple-audio-card,cpu {
 +			sound-dai = <&i2s1_8ch>;
@@ -267,16 +269,6 @@ index 000000000000..a766f21bd6f8
 +		simple-audio-card,codec {
 +			sound-dai = <&rk817>;
 +		};
-+	};
-+
-+	sdio_pwrseq: sdio-pwrseq {
-+		compatible = "mmc-pwrseq-simple";
-+		clocks = <&rk817 1>;
-+		clock-names = "ext_clock";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wifi_reset>;
-+		reset-gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
-+		post-power-on-delay-ms = <200>;
 +	};
 +
 +	speaker_amp: speaker-amplifier {
@@ -288,7 +280,7 @@ index 000000000000..a766f21bd6f8
 +		VCC-supply = <&vcc_bat>;
 +	};
 +
-+	vcc_3v3: vcc_3v3 {
++	vcc_3v3: vcc-3v3 {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc_3v3";
 +		regulator-always-on;
@@ -302,7 +294,7 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	vcc3v3_minipcie: vcc3v3_minipcie {
++	vcc3v3_minipcie: vcc3v3-minipcie {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
 +		gpio = <&gpio4 RK_PC3 GPIO_ACTIVE_HIGH>;
@@ -318,7 +310,7 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	vcc3v3_sd: vcc3v3_sd {
++	vcc3v3_sd: vcc3v3-sd {
 +		compatible = "regulator-fixed";
 +		gpio = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
 +		pinctrl-names = "default";
@@ -333,7 +325,7 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	vcc5v0_usb_host0: vcc5v0_usb_host0 {
++	vcc5v0_usb_host0: vcc5v0-usb-host0 {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
 +		gpio = <&gpio4 RK_PC4 GPIO_ACTIVE_HIGH>;
@@ -349,7 +341,7 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	vcc5v0_usb_host2: vcc5v0_usb_host2 {
++	vcc5v0_usb_host2: vcc5v0-usb-host2 {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
 +		gpio = <&gpio4 RK_PC5 GPIO_ACTIVE_HIGH>;
@@ -365,14 +357,14 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	vcc_bat: vcc_bat {
++	vcc_bat: vcc-bat {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc_bat";
 +		regulator-always-on;
 +		regulator-boot-on;
 +	};
 +
-+	vcc_sys: vcc_sys {
++	vcc_sys: vcc-sys {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc_sys";
 +		regulator-always-on;
@@ -380,21 +372,7 @@ index 000000000000..a766f21bd6f8
 +		vin-supply = <&vcc_bat>;
 +	};
 +
-+	vcc_wl: vcc_wl {
-+		compatible = "regulator-fixed";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wifi_pwren>;
-+		regulator-name = "vcc_wl";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		vin-supply = <&vcc3v3_sys>;
-+
-+		regulator-state-mem {
-+			regulator-off-in-suspend;
-+		};
-+	};
-+
-+	vdd1v2_dvp: vdd1v2_dvp {
++	vdd1v2_dvp: vdd1v2-dvp {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vdd1v2_dvp";
 +		regulator-min-microvolt = <1200000>;
@@ -838,13 +816,7 @@ index 000000000000..a766f21bd6f8
 +};
 +
 +&pinctrl {
-+	accelerometer {
-+		gsensor_int_l: gsensor-int-l {
-+			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>;
-+		};
-+	};
-+
-+	bluetooth {
++	bt {
 +		bt_wake_host_h: bt-wake-host-h {
 +			rockchip,pins = <0 RK_PB5 RK_FUNC_GPIO &pcfg_pull_down>;
 +		};
@@ -870,21 +842,41 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	display {
-+		lcd_pwren_h: lcd-pwren-h {
-+			rockchip,pins = <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
 +	flash {
 +		flash_led_en_h: flash-led-en-h {
 +			rockchip,pins = <4 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
 +
-+	keyboard {
++	fspi {
++		fspi_dual_io_pins: fspi-dual-io-pins {
++			rockchip,pins =
++				/* fspi_clk */
++				<1 RK_PD0 1 &pcfg_pull_none>,
++				/* fspi_cs0n */
++				<1 RK_PD3 1 &pcfg_pull_none>,
++				/* fspi_d0 */
++				<1 RK_PD1 1 &pcfg_pull_none>,
++				/* fspi_d1 */
++				<1 RK_PD2 1 &pcfg_pull_none>;
++		};
++	};
++
++	gsensor {
++		gsensor_int_l: gsensor-int-l {
++			rockchip,pins = <3 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	kb {
 +		kb_id_det: kb-id-det {
 +			rockchip,pins = <4 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	lcd {
++		lcd_pwren_h: lcd-pwren-h {
++			rockchip,pins = <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
 +
@@ -904,23 +896,9 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	sd {
++	sdmmc {
 +		sdmmc_pwren_l: sdmmc-pwren-l {
 +			rockchip,pins = <0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
-+	fspi {
-+		fspi_dual_io_pins: fspi-dual-io-pins {
-+			rockchip,pins =
-+				/* fspi_clk */
-+				<1 RK_PD0 1 &pcfg_pull_none>,
-+				/* fspi_cs0n */
-+				<1 RK_PD3 1 &pcfg_pull_none>,
-+				/* fspi_d0 */
-+				<1 RK_PD1 1 &pcfg_pull_none>,
-+				/* fspi_d1 */
-+				<1 RK_PD2 1 &pcfg_pull_none>;
 +		};
 +	};
 +
@@ -934,7 +912,7 @@ index 000000000000..a766f21bd6f8
 +		};
 +	};
 +
-+	touchscreen {
++	tp {
 +		tp_int_l_pmuio2: tp-int-l-pmuio2 {
 +			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
@@ -965,14 +943,6 @@ index 000000000000..a766f21bd6f8
 +
 +		wifi_pwren: wifi-pwren {
 +			rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+
-+		wifi_reg_on_h: wifi-reg-on-h {
-+			rockchip,pins = <0 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+
-+		wifi_reset: wifi-reset {
-+			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +
 +		wifi_wake_host_h: wifi-wake-host-h {
@@ -1042,14 +1012,12 @@ index 000000000000..a766f21bd6f8
 +	cap-sd-highspeed;
 +	cap-sdio-irq;
 +	keep-power-in-suspend;
-+	mmc-pwrseq = <&sdio_pwrseq>;
 +	non-removable;
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&sdmmc1_bus4
 +		     &sdmmc1_cmd
 +		     &sdmmc1_clk>;
 +	sd-uhs-sdr104;
-+	vmmc-supply = <&vcc_wl>;
 +	vqmmc-supply = <&vcca1v8_pmu>;
 +	status = "okay";
 +};
@@ -1151,5 +1119,5 @@ index 000000000000..a766f21bd6f8
 +	};
 +};
 -- 
-2.41.0
+2.42.0
 
