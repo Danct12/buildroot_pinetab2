@@ -1,7 +1,7 @@
-From c5619552a35c87172c8a5e69a16a64e78a9b03c7 Mon Sep 17 00:00:00 2001
+From 44ac58b6d0f80a3bcfa9384264b62be446f2c847 Mon Sep 17 00:00:00 2001
 From: Alexander Warnecke <awarnecke002@hotmail.com>
 Date: Thu, 29 Jun 2023 19:52:42 +1000
-Subject: [PATCH 3/3] power: supply: rk817: Fix battery capacity sanity check
+Subject: [PATCH 5/5] power: supply: rk817: Fix battery capacity sanity check
  calculation
 
 If the nvram variable is corrupted in a way that multiplying it by 1000 causes
@@ -18,7 +18,7 @@ Signed-off-by: Alexander Warnecke <awarnecke002@hotmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/rk817_charger.c b/drivers/power/supply/rk817_charger.c
-index 8328bcea1a29..cae9064b2be0 100644
+index 7ca91739c6cc..44af88045ac1 100644
 --- a/drivers/power/supply/rk817_charger.c
 +++ b/drivers/power/supply/rk817_charger.c
 @@ -715,7 +715,7 @@ static int rk817_read_battery_nvram_values(struct rk817_charger *charger)
@@ -31,5 +31,5 @@ index 8328bcea1a29..cae9064b2be0 100644
  			 "Invalid NVRAM max charge, setting to %u uAH\n",
  			 charger->bat_charge_full_design_uah);
 -- 
-2.42.0
+2.44.0
 
