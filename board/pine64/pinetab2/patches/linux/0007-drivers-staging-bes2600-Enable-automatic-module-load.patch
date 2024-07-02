@@ -1,0 +1,34 @@
+From 687ff622610c58b52659b34ff78273fad4d0b0ee Mon Sep 17 00:00:00 2001
+From: Danct12 <danct12@disroot.org>
+Date: Tue, 28 May 2024 01:54:08 +0000
+Subject: [PATCH 7/7] drivers: staging: bes2600: Enable automatic module
+ loading
+
+I think the new driver is stable enough (from what I've seen in the
+PineTab channel).
+
+If we don't let people use it, we'll never figure out if it's stable
+enough.
+
+Of course, some people still prefer using an external Wi-Fi adapter
+so if they want, they can blacklist the "bes2600" module and continue
+to using it.
+---
+ drivers/staging/bes2600/bes2600_sdio.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/staging/bes2600/bes2600_sdio.c b/drivers/staging/bes2600/bes2600_sdio.c
+index b9027e6f497f..f954e408f037 100644
+--- a/drivers/staging/bes2600/bes2600_sdio.c
++++ b/drivers/staging/bes2600/bes2600_sdio.c
+@@ -123,6 +123,7 @@ static const struct sdio_device_id bes2600_sdio_ids[] = {
+ 	{ SDIO_DEVICE(BES_VENDOR_ID, BES_DEVICE_ID_2002) },
+ 	{ /* end: all zeroes */			},
+ };
++MODULE_DEVICE_TABLE(sdio, bes2600_sdio_ids);
+ 
+ #ifdef BES2600_GPIO_WAKEUP_AP
+ static int bes2600_gpio_wakeup_ap_config(struct sbus_priv *priv);
+-- 
+2.45.2
+
