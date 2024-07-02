@@ -1,0 +1,5 @@
+config BR2_PACKAGE_BES2600_FIRMWARE
+	bool "bes2600-firmware"
+	help
+	  This package provides firmware for Bestechnic BES2600
+	  WLAN/BT combo chip.
